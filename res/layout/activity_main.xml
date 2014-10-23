@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.yusun.music.yunbg
+     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -35,28 +36,78 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:scaleType="matrix"
+        android:layout_below="@id/btn_albums"
         android:src="@drawable/roller" />
 
-    <android.support.v4.view.ViewPager
+ <ImageView
+            android:id="@+id/list_show_album"
+            android:layout_width="54dp"
+            android:layout_height="60dp"
+            android:paddingTop="4dp"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/yun_music_title" 
+            />
+       <TextView
+                android:id="@+id/list_song_durction"
+                android:layout_width="wrap_content"
+                android:layout_toRightOf="@id/list_show_album"
+                android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:text="00:00--00:00" />
+
+       <TextView
+           android:id="@+id/list_song_name"
+           android:layout_width="150dp"
+           android:layout_height="wrap_content"
+           android:layout_above="@id/list_song_durction"
+           android:layout_toRightOf="@id/list_show_album"
+           android:ellipsize="marquee"
+           android:focusable="true"
+           android:focusableInTouchMode="true"
+           android:marqueeRepeatLimit="marquee_forever"
+           android:paddingLeft="10dp"
+           android:singleLine="true"
+           android:text="歌曲名:" />
+       <ImageButton
+                android:id="@+id/btnPlay_player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@id/list_song_durction"
+                android:padding="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="130dp"
+                android:src="@drawable/yun_button_play" />
+
+       <ImageButton
+                android:id="@+id/btnNext_player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@id/btnPlay_player"
+                android:paddingBottom="22dp"
+                android:src="@drawable/yun_button_next" />
+       <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="4dp"
+            android:layout_above="@id/list_song_name"
+            android:layout_marginBottom="5dp"
+            android:progressDrawable="@drawable/progress_dotted" />
+		<android.support.v4.view.ViewPager
         android:id="@+id/viewpage"
-        android:layout_below="@id/btn_allSongs"
+        android:layout_below="@id/cursor"
+        android:padding="3dp"
+        android:layout_above="@id/list_show_album"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-   <!--  <TextView
-        android:id="@+id/tv_newPlaylist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:gravity="center"
-        android:text="新建列表"
-        android:textStyle="bold"
-        android:visibility="gone" />
-
-    <ListView
-        android:id="@+id/listview"
-        android:layout_below="@id/btn_allSongs"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />-->
-
-</RelativeLayout>
+</com.yusun.music.yunbg>
