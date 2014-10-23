@@ -1,46 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.music"
+    package="com.yusun.music"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="16"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <application
-        android:name="com.music.application.MyApplication"
+        android:name="com.yusun.music.application.MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/music_icon"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
+        android:theme="@android:style/Theme.Holo.Wallpaper.NoTitleBar"
+         >
         <activity
-            android:name="com.music.activity.MusicMainActivity"
-            android:label="@string/app_name" >
-                        <intent-filter>
+            android:name="com.yusun.music.MainActivity"
+            >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.music.activity.PlaylistSongActivity"
+	        <activity
+            android:name="com.yusun.music.PlaylistSongActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.music.activity.AddSong2PlaylistActivity"
+            android:name="com.yusun.music.AddSong2PlaylistActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.music.activity.MusicPlayActivity"
+            android:name="com.yusun.music.MusicPlayActivity"
             android:label="@string/app_name" >
         </activity>
 
         <service
-            android:name="com.music.service.MusicPlayService"
+            android:name="com.yusun.music.service.MusicPlayService"
             android:enabled="true" />
+        <activity android:name="com.yusun.music.normalsettings"></activity>
+        <activity android:name="com.yusun.music.allsettings"></activity>
+        <activity android:name="com.yusun.music.yunsettings"></activity>
+        <activity android:name="com.yusun.music.yun2settings"></activity>
     </application>
 
 </manifest>
