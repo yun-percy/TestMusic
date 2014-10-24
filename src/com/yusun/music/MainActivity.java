@@ -19,6 +19,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -37,27 +38,46 @@ public class MainActivity extends Activity {
 	private int currIndex = 0;
 	private int bmpW;
 	private ImageView cursor;
-	private TextView list_song_name;
-	MyReceiver myReceiver;
-	public static final String MY_ACTION = "mxp";  
+	private TextView list_song_name,list_singnername;
+	SongReceiver songReceiver;
+	SingerReceiver singerReceiver;
+	public static final String SONG_NAME = "wangjiaping",SINGER_NAME="xiaolajiao";  
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		myReceiver =new MyReceiver();
 		context = MainActivity.this;
 		manager = new LocalActivityManager(this , true);
 		manager.dispatchCreate(savedInstanceState);
-//		list_song_name=(TextView)findViewById(R.id.list_song_name);
-//		list_song_name.setText("妈蛋");
+		yun_boardcast();
 		InitImageView();
 		initTextView();
 		initPagerViewer();
-		IntentFilter filter = new IntentFilter();
-	       filter.addAction(MY_ACTION);
-		registerReceiver(myReceiver,filter);
+		
+		ImageView list_show_album;
+		list_show_album=(ImageView)findViewById(R.id.list_show_album);
+		list_show_album.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent it = new Intent();
+				it.setClass(MainActivity.this, MusicPlayActivity.class);
+				startActivity(it);
+				
+			}
+		});
 
+	}
+	private void yun_boardcast() {
+		songReceiver =new SongReceiver();
+		singerReceiver =new SingerReceiver();
+		IntentFilter songfilter = new IntentFilter();
+	       songfilter.addAction(SONG_NAME);
+		registerReceiver(songReceiver,songfilter);
+		IntentFilter singerfilter = new IntentFilter();
+	       singerfilter.addAction(SINGER_NAME);
+		registerReceiver(singerReceiver,singerfilter);
 	}
 	private void initTextView() {
 		t1 = (TextView) findViewById(R.id.btn_playlist);
@@ -220,12 +240,19 @@ public class MainActivity extends Activity {
 			pager.setCurrentItem(index);
 		}
 	};
-	public class MyReceiver extends BroadcastReceiver{
+//	广播接受
+	public class SongReceiver extends BroadcastReceiver{
 	    public void onReceive(Context context, Intent intent) {
-	        String msg=intent.getStringExtra("msg");//接收信息
-	        System.out.println(msg);
+	        String msg=intent.getStringExtra("name");//接收信息
 			list_song_name=(TextView)findViewById(R.id.list_song_name);
 			list_song_name.setText(msg);
+	    }
+	}
+	public class SingerReceiver extends BroadcastReceiver{
+	    public void onReceive(Context context, Intent intent) {
+	        String msg=intent.getStringExtra("singer");//接收信息
+			list_singnername=(TextView)findViewById(R.id.list_singnername);
+			list_singnername.setText(msg);
 	    }
 	}
 }
