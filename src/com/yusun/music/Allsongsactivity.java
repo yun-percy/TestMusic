@@ -62,8 +62,6 @@ public class Allsongsactivity extends Activity{
 					mService.setCurrentListItme(position);
 					mService.setSongs(songs);
 					mService.playMusic(songs.get(position).getUrl());
-					System.out.println(songs.get(position).getName());
-					System.out.println(songs.get(position).getSqlId());
 					String text = String.format(getResources().getString(R.string.songname), "hehe");
 //					list_song_name.setText(songs.get(position).getName());
 					
