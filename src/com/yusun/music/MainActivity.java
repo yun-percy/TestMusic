@@ -5,8 +5,10 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.LocalActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
@@ -35,19 +37,26 @@ public class MainActivity extends Activity {
 	private int currIndex = 0;
 	private int bmpW;
 	private ImageView cursor;
+	private TextView list_song_name;
+	MyReceiver myReceiver;
+	public static final String MY_ACTION = "mxp";  
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		myReceiver =new MyReceiver();
 		context = MainActivity.this;
 		manager = new LocalActivityManager(this , true);
 		manager.dispatchCreate(savedInstanceState);
-
+//		list_song_name=(TextView)findViewById(R.id.list_song_name);
+//		list_song_name.setText("妈蛋");
 		InitImageView();
 		initTextView();
 		initPagerViewer();
+		IntentFilter filter = new IntentFilter();
+	       filter.addAction(MY_ACTION);
+		registerReceiver(myReceiver,filter);
 
 	}
 	private void initTextView() {
@@ -59,6 +68,7 @@ public class MainActivity extends Activity {
 		t2.setOnClickListener(new MyOnClickListener(1));
 		t3.setOnClickListener(new MyOnClickListener(2));
 		t4.setOnClickListener(new MyOnClickListener(3));
+		
 	}
 
 	private void initPagerViewer() {
@@ -66,7 +76,7 @@ public class MainActivity extends Activity {
 		final ArrayList<View> list = new ArrayList<View>();
 		Intent intent = new Intent(context, normalsettings.class);
 		list.add(getView("A", intent));
-		Intent intent2 = new Intent(context, allsettings.class);
+		Intent intent2 = new Intent(context, Allsongsactivity.class);
 		list.add(getView("B", intent2));
 		Intent intent3 = new Intent(context, yunsettings.class);
 		list.add(getView("C", intent3));
@@ -210,4 +220,12 @@ public class MainActivity extends Activity {
 			pager.setCurrentItem(index);
 		}
 	};
+	public class MyReceiver extends BroadcastReceiver{
+	    public void onReceive(Context context, Intent intent) {
+	        String msg=intent.getStringExtra("msg");//接收信息
+	        System.out.println(msg);
+			list_song_name=(TextView)findViewById(R.id.list_song_name);
+			list_song_name.setText(msg);
+	    }
+	}
 }

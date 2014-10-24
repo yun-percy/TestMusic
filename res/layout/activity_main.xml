@@ -56,7 +56,7 @@
                 android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
-                android:text="00:00--00:00" />
+                android:text="00:00:00:00" />
 
        <TextView
            android:id="@+id/list_song_name"
@@ -70,7 +70,7 @@
            android:marqueeRepeatLimit="marquee_forever"
            android:paddingLeft="10dp"
            android:singleLine="true"
-           android:text="歌曲名:" />
+           android:text="@string/songname" />
        <ImageButton
                 android:id="@+id/btnPlay_player"
                 android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
             android:layout_height="4dp"
             android:layout_above="@id/list_song_name"
             android:layout_marginBottom="5dp"
-            android:progressDrawable="@drawable/progress_dotted" />
+            android:progressDrawable="@drawable/progress_dotted" /> <!-- -->
 		<android.support.v4.view.ViewPager
         android:id="@+id/viewpage"
         android:layout_below="@id/cursor"

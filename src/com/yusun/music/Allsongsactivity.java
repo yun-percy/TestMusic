@@ -16,42 +16,36 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.yusun.music.application.MyApplication;
-import com.yusun.music.bean.Album;
 import com.yusun.music.bean.Mp3;
 import com.yusun.music.service.MusicPlayService;
 import com.yusun.music.util.MusicUtils;
 
-public class allsettings extends Activity{
+public class Allsongsactivity extends Activity{
 
 	private ListView listView;
-	private TextView tv_newPlaylist;
 	private SimpleAdapter adapter;
 	boolean isReturePlaylist;
 	private int type = -1;
 	private List<Mp3> songs;// 歌曲集合
-	private List<String> singers;// 歌手集合
 	private List<String> al_playlist;// 播放列表集合
-	private List<Album> albums;// 专辑集合
 	private MusicPlayService mService;
 	public static final int PLAYLIST = 1;//适配器加载的数据是歌曲列表
 	public static final int SONGS_LIST = 2;//适配器加载的数据是歌曲列表
 	public static final int ALL_SINGERS_LIST = 3;//适配器加载的数据是歌手列表
 	public static final int ALL_ALBUMS_LIST = 4;//适配器加载的数据是专辑列表
 	private MyApplication application;
+//	private TextView list_song_name;
+	public static final String MY_ACTION = "mxp";  
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listview);
 		application = (MyApplication) getApplication();
-		initView();
-		initListener();
-	}
-	public void initView() {
 		listView = (ListView) this.findViewById(R.id.listview);
 		allsongs();
+		initListener();
 	}
-	
 	public void initListener() {
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
@@ -67,10 +61,21 @@ public class allsettings extends Activity{
 					mService.setCurrentListItme(position);
 					mService.setSongs(songs);
 					mService.playMusic(songs.get(position).getUrl());
-					it.setClass(allsettings.this, MusicPlayActivity.class);
-					startActivity(it);
+					System.out.println(songs.get(position).getName());
+//					list_song_name=(TextView)findViewById(R.id.list_song_name);
+					System.out.println(songs.get(position).getSqlId());
+					String text = String.format(getResources().getString(R.string.songname), "hehe");
+//					System.out.println(songs.get(position).getSingerName());
+//					list_song_name.setText(songs.get(position).getName());
+//					it.setClass(Allsongsactivity.this, MusicPlayActivity.class);
+//					startActivity(it);
 				
-				
+//				尝试写广播
+					Intent intent=new Intent();
+					intent.setAction(MY_ACTION);  
+			        //标记作用的，广播接收器通过匹配"android.intent.action.MY_BROADCAST"接收发送的消息，在AndroidMainfest.xml中进行过滤匹配
+			        intent.putExtra("msg",songs.get(position).getName());//发送的消息
+			        sendBroadcast(intent);
 			}
 		});
 	}
@@ -81,7 +86,7 @@ public class allsettings extends Activity{
 		//这里要重新刷新列表，因为跳到列表歌曲界面时可能把这个列表删了，
 		//所有再跳回来当然要刷新，另外新建列表再回来肯定要刷新的
 		if (isReturePlaylist) {
-			al_playlist = MusicUtils.PlaylistList(allsettings.this);
+			al_playlist = MusicUtils.PlaylistList(Allsongsactivity.this);
 			List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
 			for (int i = 0; i < al_playlist.size(); i++) {
 				Map<String, Object> map = new HashMap<String, Object>();
@@ -90,14 +95,14 @@ public class allsettings extends Activity{
 				map.put("singerName", "");
 				listItems.add(map);
 			}
-			adapter = new SimpleAdapter(allsettings.this, listItems, R.layout.item4music_main_activity, new String[] { "id", "songName", "singerName" }, new int[] { R.id.tv_id,
+			adapter = new SimpleAdapter(Allsongsactivity.this, listItems, R.layout.item4music_main_activity, new String[] { "id", "songName", "singerName" }, new int[] { R.id.tv_id,
 					R.id.tv_songName, R.id.tv_singerName });
 			listView.setAdapter(adapter);
 			isReturePlaylist = false;
 		}
 	}
 public void allsongs(){
-		songs = MusicUtils.getAllSongs(allsettings.this);
+		songs = MusicUtils.getAllSongs(Allsongsactivity.this);
 		List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
 		for (int i = 0; i < songs.size(); i++) {
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -110,9 +115,10 @@ public void allsongs(){
 			}
 			listItems.add(map);
 		}
-		adapter = new SimpleAdapter(allsettings.this, listItems, R.layout.item4music_main_activity, new String[] { "id", "songName", "singerName" }, new int[] { R.id.tv_id,
+		adapter = new SimpleAdapter(Allsongsactivity.this, listItems, R.layout.item4music_main_activity, new String[] { "id", "songName", "singerName" }, new int[] { R.id.tv_id,
 				R.id.tv_songName, R.id.tv_singerName });
 		type = SONGS_LIST;
+		
 		listView.setAdapter(adapter);
 	}
 }

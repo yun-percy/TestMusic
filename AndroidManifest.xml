@@ -41,7 +41,7 @@
             android:name="com.yusun.music.service.MusicPlayService"
             android:enabled="true" />
         <activity android:name="com.yusun.music.normalsettings"></activity>
-        <activity android:name="com.yusun.music.allsettings"></activity>
+        <activity android:name="com.yusun.music.Allsongsactivity"></activity>
         <activity android:name="com.yusun.music.yunsettings"></activity>
         <activity android:name="com.yusun.music.yun2settings"></activity>
     </application>

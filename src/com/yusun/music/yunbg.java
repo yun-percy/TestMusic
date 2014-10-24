@@ -12,7 +12,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 public class yunbg extends RelativeLayout {
